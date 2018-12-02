@@ -44,4 +44,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <Button
+        android:id="@+id/mandarinbutton"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="8dp"
+        android:text="This is for mandarin option"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/otherwise"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
 </android.support.constraint.ConstraintLayout>

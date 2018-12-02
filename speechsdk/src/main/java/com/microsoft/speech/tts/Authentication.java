@@ -50,7 +50,7 @@ import javax.net.ssl.HttpsURLConnection;
      */
 class Authentication {
     private static final String LOG_TAG = "Authentication";
-    public static final String AccessTokenUri = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken";
+    public static final String AccessTokenUri = "https://westus.api.cognitive.microsoft.com/sts/v1.0/issueToken";
 
     private String apiKey;
     private String accessToken;
@@ -120,7 +120,9 @@ class Authentication {
 
             String request = "";
             byte[] bytes = request.getBytes();
-            webRequest.setRequestProperty("content-length", String.valueOf(bytes.length));
+            webRequest.setRequestProperty("Host", "westus.api.cognitive.microsoft.com");
+            webRequest.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            webRequest.setRequestProperty("Content-Length", "0");
             webRequest.connect();
 
             DataOutputStream dop = new DataOutputStream(webRequest.getOutputStream());

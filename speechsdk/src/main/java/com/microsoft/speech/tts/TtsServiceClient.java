@@ -49,8 +49,8 @@ class TtsServiceClient {
     private byte[] m_result;
 
     public TtsServiceClient(String apiKey) {
-        m_outputFormat = "raw-16khz-16bit-mono-pcm";
-        m_serviceUri = "https://speech.platform.bing.com/synthesize";
+        m_outputFormat = "riff-16khz-16bit-mono-pcm";
+        m_serviceUri = "https://westus.tts.speech.microsoft.com/cognitiveservices/v1";
         m_auth = new Authentication(apiKey);
     }
 
@@ -70,18 +70,15 @@ class TtsServiceClient {
                 urlConnection.setConnectTimeout(5000);
                 urlConnection.setReadTimeout(15000);
                 urlConnection.setRequestMethod("POST");
-                urlConnection.setRequestProperty("Content-Type", s_contentType);
-                urlConnection.setRequestProperty("X-MICROSOFT-OutputFormat", m_outputFormat);
-                urlConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
-                urlConnection.setRequestProperty("X-Search-AppId", "07D3234E49CE426DAA29772419F436CA");
-                urlConnection.setRequestProperty("X-Search-ClientID", "1ECFAE91408841A480F00935DC390960");
+                urlConnection.setRequestProperty("Content-Type", "application/ssml+xml");
+                urlConnection.setRequestProperty("X-MICROSOFT-OutputFormat", "riff-16khz-16bit-mono-pcm");
                 urlConnection.setRequestProperty("User-Agent", "TTSAndroid");
-                urlConnection.setRequestProperty("Accept", "*/*");
+                urlConnection.setRequestProperty("Authorization", accessToken);
                 byte[] ssmlBytes = ssml.getBytes();
-                urlConnection.setRequestProperty("content-length", String.valueOf(ssmlBytes.length));
                 urlConnection.connect();
                 urlConnection.getOutputStream().write(ssmlBytes);
                 code = urlConnection.getResponseCode();
+                System.out.println(code);
                 if (code == 200) {
                     InputStream in = urlConnection.getInputStream();
                     ByteArrayOutputStream bout = new ByteArrayOutputStream();
