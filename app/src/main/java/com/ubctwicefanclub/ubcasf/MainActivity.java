@@ -42,6 +42,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.content.pm.PackageManager;
+
 import com.microsoft.speech.tts.Synthesizer;
 import com.microsoft.speech.tts.Voice;
 
@@ -52,6 +56,7 @@ import static android.Manifest.permission.*;
 public class MainActivity extends AppCompatActivity {
     // Note: Sign up at http://www.projectoxford.ai for the client credentials.
     private Synthesizer m_syn;
+    private String number = "7788616968";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +104,29 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     m_syn.SpeakToAudio(getString(R.string.tts_text));
+                    onCall(view);
                 }
             });
+        }
+    }
+
+    public void onCall(View view) {
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:7788616968" ));
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            //request permission from user if the app hasn't got the required permission
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.CALL_PHONE},   //request specific permission from user
+                    10);
+            return;
+        }else {     //have got permission
+            try{
+                startActivity(intent);  //call activity and make phone call
+            }
+            catch (android.content.ActivityNotFoundException ex){
+                Toast.makeText(getApplicationContext(),"yourActivity is not founded",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
